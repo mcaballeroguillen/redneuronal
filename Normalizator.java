@@ -1,10 +1,10 @@
 package tarea1;
 
 public class Normalizator {
-  protected Number hightdata;
-  protected Number lowdata;
-  protected Number hightrange;
-  protected Number lowrange;
+  protected Double hightdata;
+  protected Double lowdata;
+  protected Double hightrange;
+  protected Double lowrange;
   /**
    * Clase para normlaizar datos.
    * @param hightdata : Mayor valor de los datos. 
@@ -12,12 +12,25 @@ public class Normalizator {
    * @param hightrange : Mayor valor del rango a normalizar.
    * @param lowrange   : Menor valor del rango a normalizar.
    */
-  public Normalizator (Number hightdata, Number lowdata, Number hightrange, Number lowrange){
+  public Normalizator (Double hightdata, Double lowdata, Double hightrange, Double lowrange){
 	    this.hightdata=hightdata;
 	    this.lowdata=lowdata;
 	    this.hightrange= hightrange;
-	    this.lowdata=lowdata;
+	    this.lowrange=lowrange;
 	    		
+  }
+  /**
+   * Método que normaliza un dato
+   * @param dato : dato a normalizar
+   * @return dato ya normalizado.
+   */
+  public Double getnormalization(Double dato){
+	  Double resp = (dato-this.lowdata);
+	  resp= resp*(this.hightrange-this.lowrange);
+	  resp=resp/(this.hightdata-this.lowdata);
+	  resp=resp+ this.lowrange;
+	  return resp;
+	  
   }
   
    }

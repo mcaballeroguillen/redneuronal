@@ -8,10 +8,10 @@ import java.util.Scanner;
 public class Capture {
 	protected Scanner scan;
 	protected Scanner linescan;
-	protected HashMap<Integer, ArrayList<Number>>Data;
+	protected HashMap<Integer, ArrayList<Double>>Data;
 	
 	public Capture(){
-		Data= new HashMap<Integer,ArrayList<Number>>();
+		Data= new HashMap<Integer,ArrayList<Double>>();
 		
 	}
 	/**
@@ -44,22 +44,55 @@ public class Capture {
 	 * @param nextLine : String de la linea a leer.
 	 * @return Arreglo con los datos ya leido. 
 	 */
-	private ArrayList<Number> readline(String nextLine) {
+	private ArrayList<Double> readline(String nextLine) {
 		this.linescan=new Scanner(nextLine);
 		linescan.useDelimiter(",");
-		ArrayList<Number> resp = new ArrayList<Number>();
+		ArrayList<Double> resp = new ArrayList<Double>();
 		while(linescan.hasNext()){
 			String param=linescan.next();
 			param.replaceAll(" ", "");
 			try{
-			resp.add(Float.valueOf(param).floatValue());}
+			resp.add(Double.valueOf(param).doubleValue());}
 			catch(Exception e){System.out.println("Erro al covertir datos");}
 		}
 		return resp;
 	}
 	
-	public HashMap<Integer, ArrayList<Number>> getData(){
+	public HashMap<Integer, ArrayList<Double>> getData(){
 		return this.Data;
 		
+	}
+	
+	public ArrayList<Double> getmaxs(){
+		ArrayList<Double> resp= new ArrayList<Double>();
+		int numofparam= this.Data.get(0).size();
+		int z,y;
+		for(z=0;z<numofparam;z++){
+			Double max= this.Data.get(0).get(z);
+			for(y=0;y<this.Data.size();y++){
+				 Double tempmax= this.Data.get(y).get(z);
+				 if(max<tempmax){max=tempmax;}
+				
+			}
+			resp.add(max);
+		}
+		
+		return resp;
+	}
+	
+	public ArrayList<Double> getmins(){
+		ArrayList<Double> resp= new ArrayList<Double>();
+		int numofparam= this.Data.get(0).size();
+		int x,y;
+		for(x=0;x<numofparam;x++){
+			Double min= this.Data.get(0).get(x);
+			for(y=0;y<this.Data.size();y++){
+				Double tempmin= this.Data.get(y).get(x);
+				if(min>tempmin){min=tempmin;}
+				
+			}
+			resp.add(min);
+		}
+		return resp;
 	}
 }
