@@ -3,14 +3,16 @@ package tarea1;
 import java.util.ArrayList;
 import java.util.HashMap;
 /**
- * Red con 2 capas:
+ * Red con 3 capas:
  * 		3 inputs
+ * 		3 hidden
  * 		1 output
  * @author Marco Caballero
  *
  */
-public class Red2 implements RedNeuronal {
+public class Red3 implements RedNeuronal {
 	protected Capa in;
+	protected Capa mean;
 	protected Capa end;
 	protected Capture cap;
 	ArrayList<Double> maxs;
@@ -19,9 +21,9 @@ public class Red2 implements RedNeuronal {
 	HashMap<Integer,ArrayList<Double>>Data ;
 	ArrayList<Number>Hits;
 	ArrayList<Number>datos;
-	
-	public Red2(){
+	public Red3(){
 		in= new Capa();
+		mean= new Capa();
 		end= new Capa();
 		cap= new Capture();
 		Hits= new ArrayList<Number>();
@@ -38,10 +40,13 @@ public class Red2 implements RedNeuronal {
 		pesos2.add(2.0);pesos2.add(3.0);pesos2.add(4.0);
 		ArrayList<Double>pesos3= new ArrayList<Double>();
 		pesos3.add(2.0);pesos3.add(3.0);pesos3.add(4.0);
-		in.llenar(pesos1, -1.0, 0.1, 3);
-		end.llenar(pesos3, -1.0, 0.1, 1);
-		in.setNext(end);
-		end.setLast(in);
+		in.llenar(pesos1, -2.0, 0.1, 3);
+		mean.llenar(pesos2, -2.0, 0.1, 3);
+		end.llenar(pesos3, -2.0, 0.1, 2);
+		in.setNext(mean);
+		mean.setLast(in);
+		mean.setNext(end);
+		end.setLast(mean);
 		
 	}
 	/* (non-Javadoc)
@@ -63,8 +68,7 @@ public class Red2 implements RedNeuronal {
 			in.addin(0, nor1.getnormalization(tupla.get(0)));
 			in.addin(1, nor2.getnormalization(tupla.get(1)));
 			in.addin(2, nor3.getnormalization(tupla.get(2)));
-			ArrayList<Double> correctdata= new ArrayList<Double>();
-			correctdata.add(tupla.get(3)-1);
+			ArrayList<Double> correctdata= this.getList(tupla.get(3));
 			in.backpropagation(correctdata);
 			in.clearin();
 		}
@@ -83,10 +87,9 @@ public class Red2 implements RedNeuronal {
 			in.addin(1, nor2.getnormalization(tupla.get(1)));
 			in.addin(2, nor3.getnormalization(tupla.get(2)));
 			ArrayList<Double> output = in.getoutput();
-			double resp = output.get(0);
+			double resp = this.getNum(output);
 			in.clearin();
-			if(resp>0.5){resp=1.0;}else{resp=0.0;}
-			if(resp==tupla.get(3)-1){cont=cont+1;}
+			if(resp==tupla.get(3)){cont=cont+1;}
 		}
 		return cont;
 		
@@ -103,7 +106,7 @@ public class Red2 implements RedNeuronal {
 			this.training();
 			temhits= this.testing();
 			datos.add((double) (x*206));
-			this.Hits.add(temhits/100);
+			this.Hits.add(temhits/80);
 		}
 		
 	}
@@ -121,6 +124,19 @@ public class Red2 implements RedNeuronal {
 	public ArrayList<Number> getdatos(){
 		return this.datos;
 		
+	}
+	
+	private ArrayList<Double> getList(Double in){
+		
+		ArrayList<Double> resp = new ArrayList<Double>();
+		if(in==1){resp.add(0.0);resp.add(1.0);}else{resp.add(1.0);resp.add(0.0);}
+		
+		return resp;
+	}
+	private Double getNum(ArrayList<Double> in){
+		double resp;
+		if(in.get(0)>in.get(1)){resp=2.0;}else{resp=1.0;}
+		return resp;
 	}
 	
 }
