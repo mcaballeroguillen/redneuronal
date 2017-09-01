@@ -10,12 +10,12 @@ public interface RedNeuronal {
 	void build();
 
 	/**
-	 * Entrena le red con los primero 206 datos.
+	 * Entrena le red con los primero 2/3 datos.
 	 */
 	void training();
 
 	/**
-	 * Testea el aprendizaje de la red con los otros 100 dataos.
+	 * Testea el aprendizaje de la red con los otros 1/3 dataos.
 	 * @return : Aciertos de 100 intentos.
 	 */
 	int testing();

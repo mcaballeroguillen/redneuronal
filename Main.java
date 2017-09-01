@@ -24,7 +24,7 @@ import javafx.scene.layout.HBox;
 
 public class Main extends Application{
 protected RedNeuronal red1;
-	
+protected RedNeuronal red2;	
     @Override public void start(Stage stage) {
         stage.setTitle("JPlot");
 
@@ -63,14 +63,18 @@ protected RedNeuronal red1;
     	red1 = new Red1();
     	red1.build();
     	red1.loadstatics(100);
-    	
-        List<Number> x = red1.getdatos();
-        List<Number> y = red1.getHits();
-
+     	red2 = new Red2();
+    	red2.build();
+    	red2.loadstatics(100);
+        List<Number> x1 = red1.getdatos();
+        List<Number> y1 = red1.getHits();
+        List<Number> x2 = red2.getdatos();
+        List<Number> y2 = red2.getHits();
         lineplot.setTitle("Hits");
         lineplot.setXLabel("Learnig Num");
         lineplot.setYLabel("Hits");
-        lineplot.addSeries(x, y, "Red1");
+        lineplot.addSeries(x1, y1, "Red 3c1o");
+        lineplot.addSeries(x2, y2, "Red 2c1o");
 		return lineplot.getPlot();
 	}
 

@@ -10,9 +10,8 @@ import java.util.HashMap;
  * @author Marco Caballero
  *
  */
-public class Red1 implements RedNeuronal {
+public class Red2 implements RedNeuronal {
 	protected Capa in;
-	protected Capa mean;
 	protected Capa end;
 	protected Capture cap;
 	ArrayList<Double> maxs;
@@ -21,9 +20,9 @@ public class Red1 implements RedNeuronal {
 	HashMap<Integer,ArrayList<Double>>Data ;
 	ArrayList<Number>Hits;
 	ArrayList<Number>datos;
-	public Red1(){
+	
+	public Red2(){
 		in= new Capa();
-		mean= new Capa();
 		end= new Capa();
 		cap= new Capture();
 		Hits= new ArrayList<Number>();
@@ -41,12 +40,9 @@ public class Red1 implements RedNeuronal {
 		ArrayList<Double>pesos3= new ArrayList<Double>();
 		pesos3.add(2.0);pesos3.add(3.0);pesos3.add(4.0);
 		in.llenar(pesos1, -1.0, 0.1, 3);
-		mean.llenar(pesos2, -1.0, 0.1, 3);
 		end.llenar(pesos3, -1.0, 0.1, 1);
-		in.setNext(mean);
-		mean.setLast(in);
-		mean.setNext(end);
-		end.setLast(mean);
+		in.setNext(end);
+		end.setLast(in);
 		
 	}
 	/* (non-Javadoc)
