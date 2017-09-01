@@ -142,11 +142,13 @@ public class Capa {
 	 * Método para propagar el error
 	 * @param resp : Valor que se espera que devuelva la red.
 	 */
-	public void backpropagation(Double resp){
+	public void backpropagation(ArrayList<Double> resp){
 		if(this.next==null){
+			int cont=0;
 			for(Sigmoide sig: this.neuronas){
-				sig.errorfinal(resp);
+				sig.errorfinal(resp.get(cont));
 				sig.ajustar();
+				cont=cont+1;
 			}	
 			
 			}else{

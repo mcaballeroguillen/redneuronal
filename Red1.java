@@ -3,7 +3,7 @@ package tarea1;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Red1 {
+public class Red1 implements RedNeuronal {
 	protected Capa in;
 	protected Capa mean;
 	protected Capa end;
@@ -22,9 +22,10 @@ public class Red1 {
 		Hits= new ArrayList<Number>();
 		datos= new ArrayList<Number>();
 	}
-	/**
-	 * Construye la red neuronal.
+	/* (non-Javadoc)
+	 * @see tarea1.RedNeuronal#build()
 	 */
+	@Override
 	public void build(){
 		ArrayList<Double>pesos1= new ArrayList<Double>();
 		pesos1.add(2.0);
@@ -41,9 +42,10 @@ public class Red1 {
 		end.setLast(mean);
 		
 	}
-	/**
-	 * Entrena le red con los primero 206 datos.
+	/* (non-Javadoc)
+	 * @see tarea1.RedNeuronal#training()
 	 */
+	@Override
 	public void training(){
 		cap.readfile("/home/marco/table.csv");
 		cap.load();
@@ -59,16 +61,18 @@ public class Red1 {
 			in.addin(0, nor1.getnormalization(tupla.get(0)));
 			in.addin(1, nor2.getnormalization(tupla.get(1)));
 			in.addin(2, nor3.getnormalization(tupla.get(2)));
-			in.backpropagation(tupla.get(3)-1);
+			ArrayList<Double> correctdata= new ArrayList<Double>();
+			correctdata.add(tupla.get(3)-1);
+			in.backpropagation(correctdata);
 			in.clearin();
 		}
 		
 		
 	}
-	/**
-	 * Testea el aprendizaje de la red con los otros 100 dataos.
-	 * @return : Aciertos de 100 intentos.
+	/* (non-Javadoc)
+	 * @see tarea1.RedNeuronal#testing()
 	 */
+	@Override
 	public int testing(){
 		int cont=0;int x;
 		for(x=206;x<306;x++){
@@ -85,10 +89,10 @@ public class Red1 {
 		return cont;
 		
 	}
-	/**
-	 * Carga las estadisticas para luego gráficar
-	 * @param cycles : cantidad de ciclos de entrenamiento a hacer
+	/* (non-Javadoc)
+	 * @see tarea1.RedNeuronal#loadstatics(int)
 	 */
+	@Override
 	public void loadstatics(int cycles){
 		this.Hits.clear();
 		this.datos.clear();
@@ -101,18 +105,17 @@ public class Red1 {
 		}
 		
 	}
-	/**
-	 * Devuelve el arreglo con los aciertos 
-	 * @return Arreglo que contiene los aciertos
+	/* (non-Javadoc)
+	 * @see tarea1.RedNeuronal#getHits()
 	 */
+	@Override
 	public ArrayList<Number> getHits(){
 		return this.Hits;
 	}
-	/**
-	 * Devuelce el arreglo con la cantidad de datos de
-	 * entranimientos.
-	 * @return Arreglo que contiene la cantidad de datos procesados. 
+	/* (non-Javadoc)
+	 * @see tarea1.RedNeuronal#getdatos()
 	 */
+	@Override
 	public ArrayList<Number> getdatos(){
 		return this.datos;
 		

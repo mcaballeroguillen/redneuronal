@@ -23,7 +23,7 @@ import javafx.scene.layout.HBox;
 
 
 public class Main extends Application{
-protected Red1 red1;
+protected RedNeuronal red1;
 	
     @Override public void start(Stage stage) {
         stage.setTitle("JPlot");
